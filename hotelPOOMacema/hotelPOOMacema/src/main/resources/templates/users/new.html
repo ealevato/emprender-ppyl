@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<link th:rel="stylesheet"
+      th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css}" />
+
+<link th:rel="stylesheet"
+      th:href="@{/css/styles.css}" />
+
+<head>
+    <meta charset="UTF-8">
+    <title>Registrese en MACEMA</title>
+</head>
+<body>
+
+    <form action="#" th:action="@{/users}" th:object="${user}" method="post">
+        <div class="container">
+            <h1>Regístrese en MACEMA</h1>
+            <br>
+            <h3>Ingrese los datos de su cuenta para poder hospedarse con nosotros.</h3>
+            <hr>
+            <label for="email"><h4>Email</h4></label>
+            <input type="text" th:field="*{email}" required/>
+            <label for="pwd"><h4>Contraseña</h4></label>
+            <input type="password" th:field="*{password}" required/>
+            <hr>
+            <br>
+            <center>
+            <h5>Al crearse una cuenta en <b>MACEMA</b> acepta nuestros <a href="#">Términos y condiciones</a>.</h5>
+            <br>
+            <button type="submit" class="btn-success"><strong> Registrarse </strong></button>
+            </center>
+            <br>
+        </div>
+        <div class="container signin">
+            <center>
+                <h5>Ya tiene una cuenta? <a href="/login"><b>Inicie sesión</b></a></h5>
+            </center>
+        </div>
+
+    </form>
+</body>
+</html>

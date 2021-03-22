@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Confirme su reserva en MACEMA</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" href="/webjars/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link th:rel="stylesheet"
+          th:href="@{/css/styles.css}" />
+
+</head>
+<body>
+<div class="container-fluid">
+    <h2>Nueva Reserva</h2>
+    <label><h10>Habitación:</h10></label><span th:text="${booking.room.name}"></span>
+    <label><h10>Fecha de Ingreso:</h10></label><span th:text="${booking.checkIn}"></span>
+    <label>Fecha de Egreso:</label><span th:text="${booking.checkOut}"></span>
+    <label>Cantidad de Personas:</label><span th:text="${booking.occupancy}"></span>
+    <form action="#" th:action="@{/bookings/confirm}" th:object="${booking}" method="post">
+        <input type="hidden" th:field="${booking.checkIn}"/>
+        <input type="hidden" th:field="${booking.checkOut}"/>
+        <input type="hidden" th:field="${booking.occupancy}"/>
+        <input type="hidden" th:name="roomId" th:value="${booking.room.id}"/>
+        <button type="submit" class="btn-success" name="confirmBooking">Confirmar Reserva</button>
+    </form>
+</div>
+
+<script src="/webjars/bootstrap/4.3.1/js/bootstrap.min.js" ></script>
+</body>
+</html>

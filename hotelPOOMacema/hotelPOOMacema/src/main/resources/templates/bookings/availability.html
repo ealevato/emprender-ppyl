@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Reserve en MACEMA</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link th:rel="stylesheet"
+          th:href="@{/webjars/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker.css}" />
+    <link th:rel="stylesheet"
+          th:href="@{/webjars/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker.standalone.css}" />
+    <link th:rel="stylesheet"
+          th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css}" />
+    <link th:rel="stylesheet"
+          th:href="@{/css/styles.css}" />
+    <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/js/bootstrap-datepicker.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $(".dp").datepicker({
+                format : "yyyy-mm-dd"
+            });
+        });
+    </script>
+</head>
+
+<body>
+<div class="container-fluid" id="availability">
+    <div class="bg-light">
+        <h2>Habitaciones Disponibles</h2>
+        <hr>
+        <form action="#" th:action="@{/bookings/availability}" th:object="${roomsAvailability}" method="post">
+            <label>Fecha Ingreso</label>
+            <input type="text" class="dp" th:field="*{checkIn}" autocomplete="off"/>
+            <label>Fecha Egreso</label>
+            <input type="text" class="dp" th:field="*{checkOut}" autocomplete="off"/>
+            <label>Cantidad de Personas</label>
+            <input type="text" th:field="*{occupancy}"/>
+            <button type="submit" class="btn-primary" name="btnAvailability">Ver Disponibilidad</button>
+        </form>
+    </div>
+    <hr>
+    <table>
+        <thead>
+        <tr>
+            <th> Habitación </th>
+            <th> Capacidad </th>
+            <th> Comodidades </th>
+            <th> Precio </th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <!-- Si no hay habitaciones mostrará ese mensaje -->
+        <tr th:if="${rooms.empty}">
+            <td colspan="4"> No hay habitaciones disponibles para esos parámetros. </td>
+        </tr>
+        <tr th:each="room : ${rooms}">
+            <td><span th:text="${room.name}"> Habitación </span></td>
+            <td><span th:text="${room.occupancy}"> Capacidad </span></td>
+            <td><span th:text="${room.facilities}"> Comodidades </span></td>
+            <td><span th:text="${room.price}"> Precio </span></td>
+            <td>
+                <form action="#" th:action="@{/bookings/new}" th:object="${booking}" method="post">
+                    <input type="hidden" th:name="checkIn" th:value="${roomsAvailability.checkIn}"/>
+                    <input type="hidden" th:name="checkOut" th:value="${roomsAvailability.checkOut}"/>
+                    <input type="hidden" th:name="occupancy" th:value="${roomsAvailability.occupancy}"/>
+                    <input type="hidden" th:name="roomId" th:value="${room.id}"/>
+                    <button type="submit" name="book">Reservar</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+
+</html>
